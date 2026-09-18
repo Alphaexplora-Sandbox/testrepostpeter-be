@@ -55,4 +55,18 @@ public class HealthTests : IClassFixture<WebApplicationFactory<Program>>
         Assert.Equal("1.0.0", body.Version);
         Assert.Equal("ALPHACI Enterprise", body.Engine);
     }
+
+    private class TestableProgram : Program
+    {
+        public TestableProgram() : base()
+        {
+        }
+    }
+
+    [Fact]
+    public void Program_CanBeConstructed()
+    {
+        var program = new TestableProgram();
+        Assert.NotNull(program);
+    }
 }
