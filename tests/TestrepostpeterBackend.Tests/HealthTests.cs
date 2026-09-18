@@ -39,4 +39,34 @@ public class HealthTests : IClassFixture<WebApplicationFactory<Program>>
         Assert.NotNull(body);
         Assert.Equal(ServiceInfo.Name, body!.Service);
     }
+
+    [Fact]
+    public async Task SystemInfo_ReturnsServiceDetails()
+    {
+        var client = _factory.CreateClient();
+
+        var response = await client.GetAsync("/api/system/info");
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        var body = await response.Content.ReadFromJsonAsync<SystemInfoResponse>();
+        Assert.NotNull(body);
+        Assert.Equal(ServiceInfo.Name, body!.Service);
+        Assert.Equal("ok", body.Status);
+        Assert.Equal("1.0.0", body.Version);
+        Assert.Equal("ALPHACI Enterprise", body.Engine);
+    }
+
+    private class TestableProgram : Program
+    {
+        public TestableProgram() : base()
+        {
+        }
+    }
+
+    [Fact]
+    public void Program_CanBeConstructed()
+    {
+        var program = new TestableProgram();
+        Assert.NotNull(program);
+    }
 }
