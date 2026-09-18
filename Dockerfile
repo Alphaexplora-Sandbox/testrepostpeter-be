@@ -4,7 +4,7 @@ COPY . .
 RUN dotnet restore
 RUN dotnet publish src/TestrepostpeterBackend/TestrepostpeterBackend.csproj --configuration Release --no-restore --output /app/publish
 
-FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
+FROM mcr.microsoft.com/dotnet/aspnet:10.0-noble-chiseled AS runtime
 WORKDIR /app
 ENV ASPNETCORE_URLS=http://+:8080
 EXPOSE 8080
