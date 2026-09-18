@@ -1,0 +1,25 @@
+meta {
+  name: System Info
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{BASE_URL}}/api/system/info
+}
+
+assert {
+  res.status: eq 200
+  res.body.service: eq testrepostpeter-backend
+  res.body.status: eq ok
+}
+
+tests {
+  test("reports service engine", function() {
+    expect(res.body.engine).to.equal("ALPHACI Enterprise");
+  });
+
+  test("answers as json", function() {
+    expect(res.headers["content-type"]).to.contain("application/json");
+  });
+}
