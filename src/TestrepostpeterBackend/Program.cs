@@ -26,9 +26,14 @@ app.MapGet("/health", (IServiceStatus status) =>
 app.MapGet("/", () => Results.Ok(new HealthResponse("ready", ServiceInfo.Name)))
    .Produces<HealthResponse>(StatusCodes.Status200OK);
 
+app.MapGet("/api/system/info", (IServiceStatus status) =>
+    Results.Ok(new SystemInfoResponse(ServiceInfo.Name, status.CurrentStatus(), "1.0.0", "ALPHACI Enterprise")))
+   .Produces<SystemInfoResponse>(StatusCodes.Status200OK);
+
 app.Run();
 
 public record HealthResponse(string Status, string Service);
+public record SystemInfoResponse(string Service, string Status, string Version, string Engine);
 
 public static class ServiceInfo
 {
