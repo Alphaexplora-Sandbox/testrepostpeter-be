@@ -45,6 +45,7 @@ namespace TestrepostpeterBackend
 }
 
 // Exposed so the test project can host the application in memory.
+[System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 public partial class Program
 {
     protected Program()
