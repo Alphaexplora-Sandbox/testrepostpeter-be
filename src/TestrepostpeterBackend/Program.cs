@@ -1,3 +1,4 @@
+using TestrepostpeterBackend;
 using TestrepostpeterBackend.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,15 +31,24 @@ app.MapGet("/api/system/info", (IServiceStatus status) =>
     Results.Ok(new SystemInfoResponse(ServiceInfo.Name, status.CurrentStatus(), "1.0.0", "ALPHACI Enterprise")))
    .Produces<SystemInfoResponse>(StatusCodes.Status200OK);
 
-app.Run();
+await app.RunAsync();
 
-public record HealthResponse(string Status, string Service);
-public record SystemInfoResponse(string Service, string Status, string Version, string Engine);
-
-public static class ServiceInfo
+namespace TestrepostpeterBackend
 {
-    public const string Name = "testrepostpeter-backend";
+    public record HealthResponse(string Status, string Service);
+    public record SystemInfoResponse(string Service, string Status, string Version, string Engine);
+
+    public static class ServiceInfo
+    {
+        public const string Name = "testrepostpeter-backend";
+    }
 }
 
 // Exposed so the test project can host the application in memory.
-public partial class Program;
+public partial class Program
+{
+    protected Program()
+    {
+    }
+}
+
